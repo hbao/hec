@@ -6,6 +6,7 @@
 class VM {
 public:
 	int BS, BE, HS, HE, SS, TOP;
+	U1 R[8];
 
 	VM();
 	VM(int stack_size, int heap_size, int text_size);
