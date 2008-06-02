@@ -1,6 +1,19 @@
 #include "VM.h"
+#include "handlers/LBIHandler.h"
 
 #include <cstring>
+#include <cstdio>
+#include <fstream>
+
+using namespace std;
+
+void VM::inspectInstructions() {
+	printf("====== Inspecting Instructions ======\n");
+	for(int i = IP; i >= BS; i--) {
+		printf("%d : %d\n", i, RAM[i]);
+	}
+	printf("====== Done ======\n");
+}
 
 VM::VM() {
 	initialize(1024, 1024, 4096);
@@ -21,11 +34,23 @@ void VM::initialize(int stack_size, int heap_size, int text_size) {
 	BE = HS = text_size;
 	HE = SS = HS + heap_size;
 	TOP = SS + stack_size;
+	
+	IP = 0;
 }
 
 VM::~VM() {
-//	it causes an error message on Mac OS X
-//	delete[] RAM;
+	delete[] RAM;
+}
+
+void VM::load(const char * file_path) {
+	long start,end;
+	ifstream hec_file(file_path, ios::in|ios::binary);
+	
+	U1 current_byte;
+	while((current_byte = hec_file.get()) != (U1)EOF) {
+		RAM[IP++] = current_byte;
+	}
+	hec_file.close();
 }
 
 U1 VM::read(int index) {
@@ -34,4 +59,30 @@ U1 VM::read(int index) {
 
 void VM::write(int index, U1 value) {
 	RAM[index] = value;
+}
+
+void VM::insertInstruction(U1 * bytes) {
+	int length;
+	for(length = 0; bytes[length] != (U1)EOF; length++) ;
+	
+	for(int i = length - 1; i >= 0; i--) {
+		RAM[IP++] = bytes[i];
+	}
+}
+
+void VM::execute() {
+	while(IP > BS) {
+		executeCurrentInstruction();
+	}
+}
+
+void VM::executeCurrentInstruction() {
+	U1 cmd = RAM[--IP];
+	switch(cmd) {
+		case LBI: {LBIHandler handler(RAM, IP, R); IP -= handler.execute();} break;
+		default: {
+			IP++;
+			throw cmd;
+		}
+	}
 }
