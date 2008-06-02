@@ -2,6 +2,7 @@ Allocate and release memory (done)
 Execute command and retrieve result (done)
 
 Handle magic number in HEC file
+Reverse text segment layout?
 More instructions:
 	- ADD
 	- SUB
