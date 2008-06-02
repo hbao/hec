@@ -1,2 +1,9 @@
-Allocate and release memory
-Execute command and retrieve result
+Allocate and release memory (done)
+Execute command and retrieve result (done)
+
+Handle magic number in HEC file
+More instructions:
+	- ADD
+	- SUB
+	...
+Assembler

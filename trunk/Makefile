@@ -7,6 +7,8 @@ LIB_DIR = $(ROOT_DIR)/lib
 GEN_DIR = $(ROOT_DIR)/gen
 BIN_DIR = $(ROOT_DIR)/bin
 
+SRC_SUB_DIRS = handlers
+
 CXX_TEST_DIR = ${LIB_DIR}/cxxtest
 INCLUDE_OPTIONS = -I ${CXX_TEST_DIR} -I ${TEST_DIR} -I ${SRC_DIR}
 
@@ -39,4 +41,7 @@ test: $(OBJ_FILES) $(TEST_RUNNERS)
 clean:
 	rm -rf $(GEN_DIR) && mkdir -p $(GEN_DIR)
 	rm -rf $(BIN_DIR) && mkdir -p $(BIN_DIR)
-	rm -rf $(OBJ_DIR) && mkdir -p $(OBJ_DIR)	
+	rm -rf $(OBJ_DIR) && mkdir -p $(OBJ_DIR)
+	@for subdir in $(SRC_SUB_DIRS); do \
+		mkdir -p $(OBJ_DIR)/$${subdir} ; \
+	done
