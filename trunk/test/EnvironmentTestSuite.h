@@ -18,6 +18,13 @@ public:
 		TS_ASSERT_EQUALS(vm.HE, vm.SS);
 	}
 	
+	void testInitializeGeneralRegisters(void) {
+		VM vm;
+		for(int i = 0; i < 8; i++) {
+			TS_ASSERT_EQUALS(0, vm.R[i]);
+		}
+	}
+	
 	void testReadAndWriteMemory(void) {
 		VM vm;
 		TS_ASSERT_EQUALS(0, vm.read(vm.BS));

@@ -15,6 +15,8 @@ void VM::initialize(int stack_size, int heap_size, int text_size) {
 	RAM = new U1[memory_size];
 	memset(RAM, 0, memory_size * sizeof(U1));
 	
+	memset(R, 0, 8);
+	
 	BS = 0;
 	BE = HS = text_size;
 	HE = SS = HS + heap_size;
