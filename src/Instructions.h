@@ -5,4 +5,7 @@
 
 #define LBI 0
 
+#define LAD 6
+#define LAI 7
+
 #endif
