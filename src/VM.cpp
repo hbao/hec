@@ -42,8 +42,7 @@ VM::~VM() {
 
 void VM::load(const char * file_path) {
 	FileUtil fileUtil;
-	int file_length = fileUtil.getFileLength(file_path);
-	U1 * bytes = fileUtil.getFileContent(file_path, file_length);
+	U1 * bytes = fileUtil.loadHECFile(file_path);
 	insertInstruction(bytes);
 	delete[] bytes;
 }
