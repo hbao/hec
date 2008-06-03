@@ -1,5 +1,6 @@
 #include "VM.h"
 #include "handlers/LBIHandler.h"
+#include "handlers/LADHandler.h"
 #include "FileUtil.h"
 
 #include <cstring>
@@ -14,7 +15,7 @@ void VM::inspectInstructions() {
 }
 
 VM::VM() {
-	initialize(1024, 1024, 4096);
+	initialize(1024, 4096, 1024);
 }
 
 VM::VM(int stack_size, int heap_size, int text_size) {
@@ -26,7 +27,7 @@ void VM::initialize(int stack_size, int heap_size, int text_size) {
 	RAM = new U1[memory_size];
 	memset(RAM, 0, memory_size * sizeof(U1));
 	
-	memset(R, 0, 8);
+	memset(R, 0, 8 * sizeof(U4));
 	
 	BS = 0;
 	BE = HS = text_size;
@@ -74,8 +75,11 @@ void VM::executeCurrentInstruction() {
 	U1 cmd = RAM[--IP];
 	switch(cmd) {
 		case LBI: {LBIHandler handler(RAM, IP, R); IP -= handler.execute();} break;
+		case LAD: {LADHandler handler(RAM, IP, R); IP -= handler.execute();} break;
 		default: {
 			IP++;
+//			printf("\nUnrecognized command : %d\n", cmd);
+//			inspectInstructions();
 			throw cmd;
 		}
 	}

@@ -2,8 +2,10 @@ Allocate and release memory (done)
 Execute command and retrieve result (done)
 Reverse HEC file layout (done)
 Handle magic number in HEC file (done)
+Supported commands:
+	- LBI
 
-More instructions:
+More commands:
 	- LAD/LAI
 	- LB/SB
 	- PUSHB/POPB

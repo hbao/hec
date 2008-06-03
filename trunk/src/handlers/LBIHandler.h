@@ -1,17 +1,17 @@
-#ifndef HEC_INSTRUCTIONS_LBI
-#define HEC_INSTRUCTIONS_LBI 1
+#ifndef _HEC_INSTRUCTIONS_LBI_HANDLER
+#define _HEC_INSTRUCTIONS_LBI_HANDLER 1
 
 #include "InstructionHandler.h"
 
 class LBIHandler : InstructionHandler {
 public:
-	LBIHandler(U1 * ram, int ip, U1 * r) : RAM(ram), IP(ip), R(r) {};
+	LBIHandler(U1 * ram, U4 ip, U4 * r) : RAM(ram), IP(ip), R(r) {};
 	virtual int execute();
 	
 private:
 	U1 * RAM;
-	int IP;
-	U1 * R;
+	U4 IP;
+	U4 * R;
 };
 
 #endif
