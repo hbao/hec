@@ -1,11 +1,9 @@
 #include "VM.h"
 #include "handlers/LBIHandler.h"
+#include "FileUtil.h"
 
 #include <cstring>
 #include <cstdio>
-#include <fstream>
-
-using namespace std;
 
 void VM::inspectInstructions() {
 	printf("====== Inspecting Instructions ======\n");
@@ -43,14 +41,11 @@ VM::~VM() {
 }
 
 void VM::load(const char * file_path) {
-	long start,end;
-	ifstream hec_file(file_path, ios::in|ios::binary);
-	
-	U1 current_byte;
-	while((current_byte = hec_file.get()) != (U1)EOF) {
-		RAM[IP++] = current_byte;
-	}
-	hec_file.close();
+	FileUtil fileUtil;
+	int file_length = fileUtil.getFileLength(file_path);
+	U1 * bytes = fileUtil.getFileContent(file_path, file_length);
+	insertInstruction(bytes);
+	delete[] bytes;
 }
 
 U1 VM::read(int index) {
