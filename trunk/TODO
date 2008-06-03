@@ -1,10 +1,17 @@
 Allocate and release memory (done)
 Execute command and retrieve result (done)
 Reverse HEC file layout (done)
+Handle magic number in HEC file (done)
 
-Handle magic number in HEC file
 More instructions:
-	- ADD
-	- SUB
+	- LAD/LAI
+	- LB/SB
+	- PUSHB/POPB
+	- MOV
+	- JMP/JE/JNE
+	- SLT
+	- HALT
+	- ADD/SUB/MULT/DIV
+	- AND/OR/XOR/NOT
 	...
 Assembler
