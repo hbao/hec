@@ -1,8 +1,8 @@
 Allocate and release memory (done)
 Execute command and retrieve result (done)
+Reverse HEC file layout (done)
 
 Handle magic number in HEC file
-Reverse text segment layout?
 More instructions:
 	- ADD
 	- SUB
