@@ -5,7 +5,9 @@
 using namespace std;
 
 #include "DataTypes.h"
-#include "Instructions.h"
+#include "Commands.h"
+
+#define DEBUG(format, ...) if(should_debug){printf(format, __VA_ARGS__);}
 
 class VM {
 public:
@@ -24,13 +26,15 @@ public:
 	void execute();
 	
 	void inspectInstructions();
-
+	void disableDebug() { should_debug = false; }
 private:
 	U1 * RAM;
 	
 	void initialize(int stack_size, int heap_size, int text_size);
 	void executeCurrentInstruction();
-	void handleLBI();
+	
+	void debug(const char * str, ...);
+	bool should_debug;
 };
 
 #endif
