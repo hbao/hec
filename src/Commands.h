@@ -1,5 +1,5 @@
-#ifndef _HEC_INSTRUCTIONS
-#define _HEC_INSTRUCTIONS 1
+#ifndef _HEC_COMMANDS
+#define _HEC_COMMANDS 1
 
 #define UNKNOWN 127
 

@@ -53,6 +53,7 @@ public:
 		instruction[0] = UNKNOWN;
 		
 		VM vm;
+		vm.disableDebug();
 		vm.insertInstruction(instruction);
 		TS_ASSERT_THROWS(vm.execute(), U1);
 		TS_ASSERT_EQUALS(3, vm.IP - vm.BS);

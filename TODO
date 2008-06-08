@@ -4,9 +4,9 @@ Reverse HEC file layout (done)
 Handle magic number in HEC file (done)
 Supported commands:
 	- LBI
+	- LAD/LAI
 
 More commands:
-	- LAD/LAI
 	- LB/SB
 	- PUSHB/POPB
 	- MOV
