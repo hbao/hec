@@ -3,15 +3,15 @@
 
 #include "InstructionHandler.h"
 
-class LBIHandler : InstructionHandler {
+class LBIHandler : public InstructionHandler {
 public:
-	LBIHandler(U1 * ram, U4 ip, U4 * r) : RAM(ram), IP(ip), R(r) {};
-	virtual int execute();
-	
-private:
-	U1 * RAM;
-	U4 IP;
-	U4 * R;
+	LBIHandler(U1 * ram, U4 ip, U4 * r) : InstructionHandler(ram, ip, r) {};
+	virtual int execute() {
+		U1 register_number = RAM[IP - 1];
+		U1 value = RAM[IP - 2];
+		R[register_number] = value;
+		return 2;
+	}
 };
 
 #endif

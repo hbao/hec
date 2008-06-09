@@ -3,9 +3,9 @@
 
 #include "InstructionHandler.h"
 
-class LAIHandler : InstructionHandler {
+class LAIHandler : public InstructionHandler {
 public:
-	LAIHandler(U1 * ram, U4 ip, U4 * r) : RAM(ram), IP(ip), R(r) {};
+	LAIHandler(U1 * ram, U4 ip, U4 * r) : InstructionHandler(ram, ip, r) {};
 	virtual int execute() {
 		U1 result_register_number = RAM[IP - 1];
 		U1 offset_register_number = RAM[IP - 2];
@@ -17,11 +17,6 @@ public:
 		R[result_register_number] += R[offset_register_number];
 		return 6;
 	};
-	
-private:
-	U1 * RAM;
-	U4 IP;
-	U4 * R;
 };
 
 #endif

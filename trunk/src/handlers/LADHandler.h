@@ -3,9 +3,9 @@
 
 #include "InstructionHandler.h"
 
-class LADHandler : InstructionHandler {
+class LADHandler : public InstructionHandler {
 public:
-	LADHandler(U1 * ram, U4 ip, U4 * r) : RAM(ram), IP(ip), R(r) {};
+	LADHandler(U1 * ram, U4 ip, U4 * r) : InstructionHandler(ram, ip, r) {};
 	virtual int execute() {
 		U1 register_number = RAM[IP - 1];
 		U1 value[4];
@@ -15,11 +15,6 @@ public:
 		memcpy(R + register_number * sizeof(U4), value, sizeof(U4));
 		return 5;
 	};
-	
-private:
-	U1 * RAM;
-	U4 IP;
-	U4 * R;
 };
 
 #endif
