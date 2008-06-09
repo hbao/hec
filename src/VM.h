@@ -2,10 +2,12 @@
 #define _HEC_VM 1
 
 #include <string>
+#include <memory>
 using namespace std;
 
 #include "DataTypes.h"
 #include "Commands.h"
+#include "handlers/InstructionHandler.h"
 
 #define DEBUG(format, ...) if(should_debug){printf(format, __VA_ARGS__);}
 
@@ -29,12 +31,13 @@ public:
 	void disableDebug() { should_debug = false; }
 private:
 	U1 * RAM;
+	bool should_debug;
 	
 	void initialize(int stack_size, int heap_size, int text_size);
+	auto_ptr<InstructionHandler> getInstructionHandler(U1 cmd);
 	void executeCurrentInstruction();
 	
 	void debug(const char * str, ...);
-	bool should_debug;
 };
 
 #endif

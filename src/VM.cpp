@@ -76,15 +76,24 @@ void VM::execute() {
 
 void VM::executeCurrentInstruction() {
 	U1 cmd = RAM[--IP];
+	try {
+		IP -= getInstructionHandler(cmd) -> execute(); 
+	} catch (U1 cmd) {
+		IP ++;
+		throw cmd;
+	}
+}
+
+auto_ptr<InstructionHandler> VM::getInstructionHandler(U1 cmd) {
+	auto_ptr<InstructionHandler> handler;
 	switch(cmd) {
-		case LBI: {LBIHandler handler(RAM, IP, R); IP -= handler.execute();} break;
-		case LAD: {LADHandler handler(RAM, IP, R); IP -= handler.execute();} break;
-		case LAI: {LAIHandler handler(RAM, IP, R); IP -= handler.execute();} break;
+		case LBI: handler = auto_ptr<LBIHandler>(new LBIHandler(RAM, IP, R)); break;
+		case LAD: handler = auto_ptr<LADHandler>(new LADHandler(RAM, IP, R)); break;
+		case LAI: handler = auto_ptr<LAIHandler>(new LAIHandler(RAM, IP, R)); break;
 		default: {
-			IP++;
 			DEBUG("\nUnrecognized command : %d\n", cmd)
-//			inspectInstructions();
 			throw cmd;
 		}
 	}
+	return handler;
 }
