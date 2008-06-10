@@ -40,10 +40,21 @@ void VM::initialize(int stack_size, int heap_size, int text_size) {
 	TOP = SS + stack_size;
 	
 	IP = 0;
+	
+	handlers[LBI] = new LBIHandler();
+	handlers[LAD] = new LADHandler();
+	handlers[LAI] = new LAIHandler();
+	handlers[LB] = new LBHandler();
+	handlers[SB] = new SBHandler();
 }
 
 VM::~VM() {
 	delete[] RAM;
+	
+	map<U1, InstructionHandler*>::iterator it;
+	for(it = handlers.begin(); it != handlers.end(); it++) {
+		delete it->second;
+	}
 }
 
 void VM::load(const char * file_path) {
@@ -79,25 +90,18 @@ void VM::execute() {
 void VM::executeCurrentInstruction() {
 	U1 cmd = RAM[--IP];
 	try {
-		IP -= getInstructionHandler(cmd) -> execute(); 
+		IP -= getInstructionHandler(cmd) -> execute(RAM, IP, R); 
 	} catch (U1 cmd) {
 		IP ++;
 		throw cmd;
 	}
 }
 
-auto_ptr<InstructionHandler> VM::getInstructionHandler(U1 cmd) {
-	auto_ptr<InstructionHandler> handler;
-	switch(cmd) {
-		case LBI: handler = auto_ptr<LBIHandler>(new LBIHandler(RAM, IP, R)); break;
-		case LAD: handler = auto_ptr<LADHandler>(new LADHandler(RAM, IP, R)); break;
-		case LAI: handler = auto_ptr<LAIHandler>(new LAIHandler(RAM, IP, R)); break;
-		case LB: handler = auto_ptr<LBHandler>(new LBHandler(RAM, IP, R)); break;
-		case SB: handler = auto_ptr<SBHandler>(new SBHandler(RAM, IP, R)); break;
-		default: {
-			DEBUG("\nUnrecognized command : %d\n", cmd)
-			throw cmd;
-		}
+InstructionHandler * VM::getInstructionHandler(U1 cmd) {
+	map<U1, InstructionHandler*>::iterator it = handlers.find(cmd);
+	if(it == handlers.end()) {
+		DEBUG("\nUnrecognized command : %d\n", cmd)
+		throw cmd;
 	}
-	return handler;
+	return it->second;
 }
