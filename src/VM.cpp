@@ -2,6 +2,8 @@
 #include "handlers/LBIHandler.h"
 #include "handlers/LADHandler.h"
 #include "handlers/LAIHandler.h"
+#include "handlers/LBHandler.h"
+#include "handlers/SBHandler.h"
 #include "FileUtil.h"
 
 #include <cstring>
@@ -90,6 +92,8 @@ auto_ptr<InstructionHandler> VM::getInstructionHandler(U1 cmd) {
 		case LBI: handler = auto_ptr<LBIHandler>(new LBIHandler(RAM, IP, R)); break;
 		case LAD: handler = auto_ptr<LADHandler>(new LADHandler(RAM, IP, R)); break;
 		case LAI: handler = auto_ptr<LAIHandler>(new LAIHandler(RAM, IP, R)); break;
+		case LB: handler = auto_ptr<LBHandler>(new LBHandler(RAM, IP, R)); break;
+		case SB: handler = auto_ptr<SBHandler>(new SBHandler(RAM, IP, R)); break;
 		default: {
 			DEBUG("\nUnrecognized command : %d\n", cmd)
 			throw cmd;
