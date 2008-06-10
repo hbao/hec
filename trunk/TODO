@@ -5,9 +5,9 @@ Handle magic number in HEC file (done)
 Supported commands:
 	- LBI
 	- LAD/LAI
+	- LB/SB
 
 More commands:
-	- LB/SB
 	- PUSHB/POPB
 	- MOV
 	- JMP/JE/JNE

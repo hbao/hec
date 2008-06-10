@@ -2,7 +2,7 @@
 
 #include "VM.h"
 
-class LADAndLAITestSuite : public CxxTest::TestSuite {
+class CommandsTestSuite : public CxxTest::TestSuite {
 public:
 	void testLADShouldPutAddressIntoRegister() {
 		U1 instruction[7];
@@ -34,5 +34,37 @@ public:
 		vm.execute();
 		
 		TS_ASSERT_EQUALS(0x01020304, vm.R[0]);
+	}
+	
+	void testLBShouldTakeByteAtAddressR2AndStoreInR1() {
+		U1 instruction[4];
+		instruction[0] = LB;
+		instruction[1] = 0;
+		instruction[2] = 1;
+		instruction[3] = EOF;
+		
+		VM vm;
+		vm.R[1] = 0x0A;
+		vm.write(0x0A, 0xAB);
+		vm.insertInstruction(instruction);
+		vm.execute();
+		
+		TS_ASSERT_EQUALS(0xAB, vm.R[0]);
+	}
+	
+	void testSBShouldPlaceByteInR1AtAddressInR2() {
+		U1 instruction[4];
+		instruction[0] = SB;
+		instruction[1] = 0;
+		instruction[2] = 1;
+		instruction[3] = EOF;
+		
+		VM vm;
+		vm.R[0] = 0xAB;
+		vm.R[1] = 0x0A;
+		vm.insertInstruction(instruction);
+		vm.execute();
+		
+		TS_ASSERT_EQUALS(0xAB, vm.read(0x0A));
 	}
 };
