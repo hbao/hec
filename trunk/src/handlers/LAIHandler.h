@@ -5,7 +5,7 @@
 
 class LAIHandler : public InstructionHandler {
 public:
-	virtual int execute(U1 * RAM, U4 IP, U4 * R) {
+	virtual int execute(U1 * RAM, U4 IP, U4 * R, U4 HS, U4 SS) {
 		U1 result_register_number = RAM[IP - 1];
 		U1 offset_register_number = RAM[IP - 2];
 		U1 value[4];

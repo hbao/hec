@@ -44,8 +44,8 @@ public:
 		instruction[3] = EOF;
 		
 		VM vm;
-		vm.R[1] = 0x0A;
-		vm.write(0x0A, 0xAB);
+		vm.R[1] = 0;
+		vm.write(vm.HS, 0xAB);
 		vm.insertInstruction(instruction);
 		vm.execute();
 		
@@ -65,6 +65,6 @@ public:
 		vm.insertInstruction(instruction);
 		vm.execute();
 		
-		TS_ASSERT_EQUALS(0xAB, vm.read(0x0A));
+		TS_ASSERT_EQUALS(0xAB, vm.read(vm.HS + 0x0A));
 	}
 };
