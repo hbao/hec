@@ -5,8 +5,7 @@
 
 class LADHandler : public InstructionHandler {
 public:
-	LADHandler(U1 * ram, U4 ip, U4 * r) : InstructionHandler(ram, ip, r) {};
-	virtual int execute() {
+	virtual int execute(U1 * RAM, U4 IP, U4 * R) {
 		U1 register_number = RAM[IP - 1];
 		U1 value[4];
 		for(int i = 0; i < 4; i++) {

@@ -1,8 +1,7 @@
 #ifndef _HEC_VM
 #define _HEC_VM 1
 
-#include <string>
-#include <memory>
+#include <map>
 using namespace std;
 
 #include "DataTypes.h"
@@ -32,9 +31,10 @@ public:
 private:
 	U1 * RAM;
 	bool should_debug;
+	map<U1, InstructionHandler*> handlers;
 	
 	void initialize(int stack_size, int heap_size, int text_size);
-	auto_ptr<InstructionHandler> getInstructionHandler(U1 cmd);
+	InstructionHandler * getInstructionHandler(U1 cmd);
 	void executeCurrentInstruction();
 	
 	void debug(const char * str, ...);
