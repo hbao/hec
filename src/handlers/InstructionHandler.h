@@ -6,7 +6,7 @@
 class InstructionHandler {
 public:
 	virtual ~InstructionHandler(){};
-	virtual int execute(U1 * RAM, U4 IP, U4 * R) = 0;
+	virtual int execute(U1 * RAM, U4 IP, U4 * R, U4 HS, U4 SS) = 0;
 };
 
 #endif

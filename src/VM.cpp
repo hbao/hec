@@ -90,7 +90,7 @@ void VM::execute() {
 void VM::executeCurrentInstruction() {
 	U1 cmd = RAM[--IP];
 	try {
-		IP -= getInstructionHandler(cmd) -> execute(RAM, IP, R); 
+		IP -= getInstructionHandler(cmd) -> execute(RAM, IP, R, HS, SS); 
 	} catch (U1 cmd) {
 		IP ++;
 		throw cmd;
