@@ -1,0 +1,1 @@
+HEC is an experimental virtual machine described in the book "Virtual Machine Design and Implementation with C/C++".
